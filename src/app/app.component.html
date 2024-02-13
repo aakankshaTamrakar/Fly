@@ -1,0 +1,61 @@
+<div class="header">
+  <h4>Github Users</h4>
+</div>
+
+
+<div class="container">
+  <div class="userContainer" *ngFor="let user of displayedUsers">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="userInfo">
+          <div class="userImg">
+            <img [src]="user.avatar_url">
+          </div>
+          <div class="userDetail">
+            <div class="userData" *ngFor="let datas of user.data">
+                <h4>{{ datas.name }}</h4>
+                <a [href]="user.html_url" target="_blank" class="logUser">{{ user.login }}</a>
+                <p class="follow"><span><i class="fas fa-users"></i></span> {{datas.followers | followerCount }} <span>Followers</span>, {{datas.following}} <span>Following</span> </p>
+                <p><i class="fa fa-building"></i> {{datas.company}}</p>
+                <p><i class="fas fa-map-pin"></i> {{datas.location}}</p>
+                <p><i class="fas fa-blog"></i> <a [href]="datas.blog" target="_blank">{{datas.blog}}</a></p>
+                <p><i class="fab fa-twitter"></i> {{datas.twitter_username}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <h5>Git repositories</h5>
+
+          <div class="col-md-4" *ngFor="let repo of user.repos">
+            <div class="userRepo">
+              <a [href]="repo.html_url" target="_blank">{{ repo.name }}</a>
+              <p>{{repo.description}}</p>
+              <p *ngIf="!repo.description">----</p>
+              <p>
+                <span class="pr-2"><i class="fas fa-circle"></i> {{repo.language}} </span>
+                <span class="pr-2"><i class="far fa-star"></i> {{repo.stargazers_count | followerCount}} </span>
+                <span class="pr-2"><i class="fas fa-code-branch"></i> {{repo.forks}}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" href="#" (click)="prevPage()">Previous</a>
+      </li>
+      <li class="page-item" [class.active]="page === currentPage" *ngFor="let page of pages">
+        <a class="page-link" href="#" (click)="setPage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" href="#" (click)="nextPage()">Next</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
